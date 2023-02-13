@@ -1,0 +1,59 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, value):
+        if self.root is None:
+            self.root = Node(value)
+        else:
+            current = self.root
+            while True:
+                if value < current.value:
+                    if current.left is None:
+                        current.left = Node(value)
+                        break
+                    else:
+                        current = current.left
+                else:
+                    if current.right is None:
+                        current.right = Node(value)
+                        break
+                    else:
+                        current = current.right
+
+    def find_min(self):
+        if self.root is None:
+            return None
+        current = self.root
+        while current.left is not None:
+            current = current.left
+        return current.value
+
+    def inorder_traversal(self, node):
+        if node is None:
+            return []
+        return self.inorder_traversal(node.left) + [node.value] + self.inorder_traversal(node.right)
+
+def InsertMinlin(bst, value):
+    min_value = bst.find_min()
+    if min_value is None:
+        bst.insert(value)
+    else:
+        bst.insert(min_value - 1)
+        bst.insert(value)
+
+bst = BinarySearchTree()
+InsertMinlin(bst, 5)
+InsertMinlin(bst, 3)
+InsertMinlin(bst, 7)
+InsertMinlin(bst, 2)
+InsertMinlin(bst, 4)
+InsertMinlin(bst, 6)
+InsertMinlin(bst, 8)
+print(bst.inorder_traversal(bst.root))
